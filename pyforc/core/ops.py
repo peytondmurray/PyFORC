@@ -122,3 +122,22 @@ def hr_vals_from_h(h: list[np.ndarray]) -> list[np.ndarray]:
         the h-value of the first datapoint in the curve.
     """
     return [np.full_like(curve, fill_value=curve[0]) for curve in h]
+
+
+def normalize(data: ForcData, _) -> ForcData:
+    """Normalize the magnetization to the range [-1, 1].
+
+    Parameters
+    ----------
+    data : ForcData
+        Data to normalize
+
+    Returns
+    -------
+    ForcData
+        Normalized data; only the interpolated dataset is normalized.
+    """
+    return ForcData.from_existing(
+        data=data,
+        m=1 - 2 * (np.nanmax(data.m) - data.m) / (np.nanmax(data.m) - np.nanmin(data.m))
+    )
