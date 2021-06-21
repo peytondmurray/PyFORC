@@ -92,3 +92,25 @@ def curves(fc: forc.Forc, ax: axes.Axes = None) -> axes.Axes:
     ax.set_xlim(np.nanmin(fc.data.h), np.nanmax(fc.data.h))
     ax.set_ylim(np.nanmin(fc.data.m), np.nanmax(fc.data.m))
     return ax
+
+
+def plot_drift(fc: forc.Forc, ax: axes.Axes = None) -> axes.Axes:
+    """Plot the drift point for each reversal curve.
+
+    Parameters
+    ----------
+    fc : forc.Forc
+        Forc instance containing drift data to be plotted
+    ax : axes.Axes
+        Axes on which the data is to be drawn
+
+    Returns
+    -------
+    axes.Axes
+        Axes on which the data has been drawn
+    """
+    if ax is None:
+        _, ax = plt.subplots(1, 1, figsize=(20, 10))
+
+    ax.plot(np.arange(len(fc.data.m_drift)), fc.data.m_drift, '-or')
+    return ax
